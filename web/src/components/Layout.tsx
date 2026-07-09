@@ -100,7 +100,7 @@ export function Layout({ children }: { children: ReactNode }) {
           </Stack>
         </Toolbar>
       </AppBar>
-      <Container maxWidth="lg" sx={{ py: 4 }}>
+      <Container maxWidth="xl" sx={{ py: 4 }}>
         {children}
       </Container>
     </Box>
