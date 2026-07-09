@@ -4,6 +4,7 @@ import { Card, Chip, Text, TouchableRipple } from 'react-native-paper';
 import { ApprovalChip } from './ApprovalChip';
 import { formatDateDisplay, formatHours } from '../utils/duration';
 import type { OtRequest } from '../types';
+import { taskStatusLabel } from '../utils/taskStatus';
 
 interface Props {
   request: OtRequest;
@@ -61,11 +62,7 @@ export function OtRequestCard({ request: r, showUser, onUserPress, footer, highl
         )}
 
         <View style={styles.chips}>
-          <Chip compact>
-            {r.taskStatus === 'DONE'
-              ? 'Done'
-              : `In progress — ${r.hoursToComplete ?? '?'}h left`}
-          </Chip>
+          <Chip compact>{taskStatusLabel(r.taskStatus, r.hoursToComplete)}</Chip>
           <ApprovalChip status={r.approvalStatus} />
         </View>
 

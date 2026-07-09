@@ -8,6 +8,7 @@ import { useTeamworkAutofill } from '../hooks/useTeamworkAutofill';
 import { computeDurationHours, formatHours, toHHMM } from '../utils/duration';
 import { extractTeamworkTaskUrl } from '../utils/teamwork';
 import type { OtBlockDraft, Project, TaskStatus } from '../types';
+import { TASK_STATUS_OPTIONS } from '../utils/taskStatus';
 
 interface Props {
   index: number;
@@ -20,10 +21,7 @@ interface Props {
   label?: string;
 }
 
-const STATUS_OPTIONS = [
-  { value: 'DONE', label: 'Done' },
-  { value: 'IN_PROGRESS', label: 'In progress — need X hours' },
-];
+const STATUS_OPTIONS = TASK_STATUS_OPTIONS;
 
 export function OtBlockCard({
   index,

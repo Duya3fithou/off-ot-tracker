@@ -8,6 +8,8 @@
     "ios": "expo run:ios",
     "typecheck": "tsc --noEmit",
     "prebuild": "expo prebuild",
+    "apk": "cd android && ./gradlew assembleRelease && open app/build/outputs/apk/release",
+    "apk:open": "open android/app/build/outputs/apk/release",
     "ota:deploy": "hot-updater deploy -p android && hot-updater deploy -p ios"
   },
   "dependencies": {
