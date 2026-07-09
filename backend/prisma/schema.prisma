@@ -1,0 +1,79 @@
+// Prisma schema for OT Logger
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String      @id @default(cuid())
+  email      String      @unique
+  name       String
+  picture    String?
+  createdAt  DateTime    @default(now())
+  otRequests OtRequest[]
+}
+
+model Project {
+  id         String      @id @default(cuid())
+  name       String      @unique
+  active     Boolean     @default(true)
+  createdAt  DateTime    @default(now())
+  otRequests OtRequest[]
+}
+
+// Singleton row (always id = 1) holding admin-configurable app settings.
+model AppSetting {
+  id              Int      @id @default(1)
+  // When true, an email is sent to admins each time an employee submits OT.
+  emailOnOtSubmit Boolean  @default(true)
+  updatedAt       DateTime @updatedAt @default(now())
+}
+
+enum TaskStatus {
+  DONE
+  IN_PROGRESS
+}
+
+enum ApprovalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model OtRequest {
+  id             String         @id @default(cuid())
+  user           User           @relation(fields: [userId], references: [id])
+  userId         String
+  project        Project        @relation(fields: [projectId], references: [id])
+  projectId      String
+  // Work day as YYYY-MM-DD (kept as string to avoid timezone drift)
+  workDate       String
+  // Times as HH:MM (24h)
+  startTime      String
+  endTime        String
+  // Computed on the server, in hours (e.g. 3.5)
+  durationHours  Float
+  taskLink       String
+  taskStatus     TaskStatus
+  // Only set when taskStatus = IN_PROGRESS ("need X hours to done")
+  hoursToComplete Int?
+  approvalStatus ApprovalStatus @default(PENDING)
+  reviewedById   String?
+  reviewedByEmail String?
+  reviewedAt     DateTime?
+  reviewNote     String?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt @default(now())
+  // Optimistic-concurrency token; bumped on every mutation. Admins send the
+  // version they saw when reviewing so stale approvals are rejected (409).
+  version        Int            @default(0)
+
+  @@index([userId])
+  @@index([projectId])
+  @@index([approvalStatus])
+  @@index([workDate])
+}

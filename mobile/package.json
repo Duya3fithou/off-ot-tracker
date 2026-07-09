@@ -1,0 +1,46 @@
+{
+  "name": "ot-logger-mobile",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "scripts": {
+    "start": "expo start --dev-client",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "typecheck": "tsc --noEmit",
+    "prebuild": "expo prebuild",
+    "ota:deploy": "hot-updater deploy -p android && hot-updater deploy -p ios"
+  },
+  "dependencies": {
+    "@expo/vector-icons": "^15.0.2",
+    "@hot-updater/react-native": "^0.35.1",
+    "@react-native-community/datetimepicker": "9.1.0",
+    "@react-native-google-signin/google-signin": "^16.1.2",
+    "@react-navigation/native": "^7.0.14",
+    "@react-navigation/native-stack": "^7.2.0",
+    "axios": "^1.7.9",
+    "dayjs": "^1.11.13",
+    "expo": "~57.0.2",
+    "expo-constants": "~57.0.3",
+    "expo-secure-store": "~57.0.0",
+    "expo-splash-screen": "~57.0.2",
+    "expo-status-bar": "~57.0.0",
+    "react": "19.2.3",
+    "react-native": "0.86.0",
+    "react-native-onesignal": "^5.2.6",
+    "react-native-paper": "^5.12.5",
+    "react-native-safe-area-context": "~5.7.0",
+    "react-native-screens": "4.25.2",
+    "react-native-toast-message": "^2.3.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.0",
+    "@hot-updater/expo": "^0.35.1",
+    "@hot-updater/supabase": "^0.35.1",
+    "@types/react": "~19.2.0",
+    "dotenv": "^17.4.2",
+    "hot-updater": "^0.35.1",
+    "onesignal-expo-plugin": "^2.0.3",
+    "typescript": "~5.8.3"
+  },
+  "private": true
+}

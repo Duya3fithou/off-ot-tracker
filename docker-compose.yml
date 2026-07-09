@@ -1,0 +1,22 @@
+services:
+  db:
+    image: postgres:16
+    container_name: ot-logger-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ot_logger
+    ports:
+      # host:container — matches DATABASE_URL in backend/.env.example
+      - "5432:5432"
+    volumes:
+      - ot_logger_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d ot_logger"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  ot_logger_pgdata:
