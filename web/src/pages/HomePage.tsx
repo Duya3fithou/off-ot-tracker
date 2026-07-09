@@ -20,6 +20,7 @@ import { OtBlockCard } from '../components/OtBlockCard';
 import { TaskCell } from '../components/TaskCell';
 import { useOtLog } from '../hooks/useOtLog';
 import type { OtRequest } from '../types';
+import { taskStatusLabel } from '../utils/taskStatus';
 
 export function HomePage() {
   const {
@@ -137,11 +138,7 @@ function MyRequestsTable({
               <TableCell sx={{ maxWidth: 320, whiteSpace: 'pre-wrap' }}>
                 <TaskCell text={r.taskLink} />
               </TableCell>
-              <TableCell>
-                {r.taskStatus === 'DONE'
-                  ? 'Done'
-                  : `In progress — ${r.hoursToComplete ?? '?'}h left`}
-              </TableCell>
+              <TableCell>{taskStatusLabel(r.taskStatus, r.hoursToComplete)}</TableCell>
               <TableCell>
                 <ApprovalChip status={r.approvalStatus} />
               </TableCell>

@@ -17,7 +17,7 @@ const blockSchema = z
     endTime: z.string().regex(timeRe, 'endTime must be HH:MM'),
     projectId: z.string().min(1),
     taskLink: z.string().trim().min(1).max(2000),
-    taskStatus: z.enum(['DONE', 'IN_PROGRESS']),
+    taskStatus: z.enum(['DONE_LOCAL', 'DONE_STAGING', 'DONE_PRODUCTION', 'IN_PROGRESS']),
     hoursToComplete: z.number().int().positive().max(1000).optional(),
   })
   .refine(

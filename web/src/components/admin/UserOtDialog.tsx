@@ -16,6 +16,7 @@ import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { fetchAdminOtRequests } from '../../api/client';
 import type { OtRequest } from '../../types';
+import { taskStatusLabel } from '../../utils/taskStatus';
 import { ApprovalChip } from '../ApprovalChip';
 import { TaskCell } from '../TaskCell';
 
@@ -106,11 +107,7 @@ export function UserOtDialog({ open, onClose, userId, userName, userEmail, month
                   <TableCell sx={{ maxWidth: 280, whiteSpace: 'pre-wrap' }}>
                     <TaskCell text={r.taskLink} />
                   </TableCell>
-                  <TableCell>
-                    {r.taskStatus === 'DONE'
-                      ? 'Done'
-                      : `In progress — ${r.hoursToComplete ?? '?'}h left`}
-                  </TableCell>
+                  <TableCell>{taskStatusLabel(r.taskStatus, r.hoursToComplete)}</TableCell>
                   <TableCell>
                     <ApprovalChip status={r.approvalStatus} />
                   </TableCell>

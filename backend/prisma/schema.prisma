@@ -34,7 +34,9 @@ model AppSetting {
 }
 
 enum TaskStatus {
-  DONE
+  DONE_LOCAL
+  DONE_STAGING
+  DONE_PRODUCTION
   IN_PROGRESS
 }
 

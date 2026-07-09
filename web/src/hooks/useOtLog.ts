@@ -19,7 +19,7 @@ export function emptyBlock(): OtBlockDraft {
     endTime: null,
     projectId: '',
     taskLink: '',
-    taskStatus: 'DONE',
+    taskStatus: 'DONE_LOCAL',
     hoursToComplete: '',
   };
 }

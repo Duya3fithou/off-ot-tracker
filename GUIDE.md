@@ -37,7 +37,10 @@ three** (plus both API clients).
   - `startTime`, `endTime`: **string `HH:MM`** (24h).
   - `durationHours`: **Float, always computed server-side** (see §2).
   - `taskLink`: free text (may contain a URL; clients linkify the first URL).
-  - `taskStatus`: enum `DONE | IN_PROGRESS`. When `IN_PROGRESS`, `hoursToComplete` (int) is required.
+  - `taskStatus`: enum `DONE_LOCAL | DONE_STAGING | DONE_PRODUCTION | IN_PROGRESS`. When
+    `IN_PROGRESS`, `hoursToComplete` (int) is required. Display labels + the picker option
+    list live in each app's `utils/taskStatus.ts` (`taskStatusLabel`, `TASK_STATUS_OPTIONS`) —
+    reuse them, don't inline the label logic in tables/cards.
   - `approvalStatus`: enum `PENDING | APPROVED | REJECTED`. New requests are always `PENDING`.
   - Review fields: `reviewedById`, `reviewedByEmail`, `reviewedAt`, `reviewNote`.
   - `version`: **optimistic-concurrency token** (Int, bumped on every mutation). `updatedAt` is auto-maintained.

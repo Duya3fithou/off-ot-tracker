@@ -15,7 +15,7 @@ export interface Project {
   otRequestCount?: number;
 }
 
-export type TaskStatus = 'DONE' | 'IN_PROGRESS';
+export type TaskStatus = 'DONE_LOCAL' | 'DONE_STAGING' | 'DONE_PRODUCTION' | 'IN_PROGRESS';
 export type ApprovalStatus = 'PENDING' | 'APPROVED' | 'REJECTED';
 
 export interface OtRequest {

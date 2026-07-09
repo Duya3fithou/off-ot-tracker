@@ -15,6 +15,7 @@ import type { Dayjs } from 'dayjs';
 import { useRef } from 'react';
 import { useTeamworkAutofill } from '../hooks/useTeamworkAutofill';
 import type { Project, TaskStatus } from '../types';
+import { TASK_STATUS_OPTIONS } from '../utils/taskStatus';
 import { computeDurationHours } from '../utils/duration';
 import { extractTeamworkTaskUrl } from '../utils/teamwork';
 
@@ -175,8 +176,11 @@ export function OtBlockCard({
                 onChange(block.key, { taskStatus: e.target.value as TaskStatus })
               }
             >
-              <MenuItem value="DONE">Done</MenuItem>
-              <MenuItem value="IN_PROGRESS">In progress — need X hours to done</MenuItem>
+              {TASK_STATUS_OPTIONS.map((o) => (
+                <MenuItem key={o.value} value={o.value}>
+                  {o.label}
+                </MenuItem>
+              ))}
             </TextField>
           </Grid>
 

@@ -13,6 +13,7 @@ import TextField from '@mui/material/TextField';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import { useAdminRequests } from '../../hooks/useAdminRequests';
+import { taskStatusLabel } from '../../utils/taskStatus';
 import { ApprovalChip } from '../ApprovalChip';
 import { TaskCell } from '../TaskCell';
 import { MonthPicker } from './MonthPicker';
@@ -49,8 +50,7 @@ export function AdminRequestsTab() {
             <TableRow>
               <TableCell>User</TableCell>
               <TableCell>Date</TableCell>
-              <TableCell>Start</TableCell>
-              <TableCell>End</TableCell>
+              <TableCell>Time</TableCell>
               <TableCell align="right">Hours</TableCell>
               <TableCell>Project</TableCell>
               <TableCell>Task</TableCell>
@@ -62,7 +62,7 @@ export function AdminRequestsTab() {
           <TableBody>
             {requests.length === 0 && (
               <TableRow>
-                <TableCell colSpan={10}>
+                <TableCell colSpan={9}>
                   <Box sx={{ py: 2, textAlign: 'center', color: 'text.secondary' }}>
                     No requests for this filter.
                   </Box>
@@ -89,23 +89,20 @@ export function AdminRequestsTab() {
                   </Box>
                 </TableCell>
                 <TableCell>{dayjs(r.workDate).format('DD/MM/YYYY')}</TableCell>
-                <TableCell>{r.startTime}</TableCell>
-                <TableCell>{r.endTime}</TableCell>
+                <TableCell sx={{ whiteSpace: 'nowrap' }}>
+                  {r.startTime}–{r.endTime}
+                </TableCell>
                 <TableCell align="right">{r.durationHours}</TableCell>
                 <TableCell>{r.project?.name}</TableCell>
                 <TableCell sx={{ maxWidth: 280, whiteSpace: 'pre-wrap' }}>
                   <TaskCell text={r.taskLink} />
                 </TableCell>
-                <TableCell>
-                  {r.taskStatus === 'DONE'
-                    ? 'Done'
-                    : `In progress — ${r.hoursToComplete ?? '?'}h left`}
-                </TableCell>
+                <TableCell>{taskStatusLabel(r.taskStatus, r.hoursToComplete)}</TableCell>
                 <TableCell>
                   <ApprovalChip status={r.approvalStatus} />
                 </TableCell>
                 <TableCell align="right">
-                  <Stack direction="row" spacing={1} justifyContent="flex-end">
+                  <Stack spacing={0.75} alignItems="stretch" sx={{ minWidth: 96 }}>
                     <Button
                       size="small"
                       color="success"
