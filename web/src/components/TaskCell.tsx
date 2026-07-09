@@ -1,3 +1,4 @@
+import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import { useState } from 'react';
 
@@ -12,39 +13,36 @@ export function TaskCell({ text }: { text: string }) {
   const [expanded, setExpanded] = useState(false);
   const isLong = text.length > TASK_TRUNCATE_LENGTH;
 
-  if (isLong && !expanded) {
-    return (
-      <>
-        {linkify(`${text.slice(0, TASK_TRUNCATE_LENGTH).trimEnd()}…`)}{' '}
-        <Link
-          component="button"
-          type="button"
-          variant="body2"
-          onClick={() => setExpanded(true)}
-        >
-          View all
-        </Link>
-      </>
-    );
-  }
-
+  // Break long unbroken strings (e.g. task URLs) so they wrap inside the cell
+  // instead of overflowing into the next column.
   return (
-    <>
-      {linkify(text)}
-      {isLong && (
+    <Box component="span" sx={{ display: 'block', overflowWrap: 'anywhere' }}>
+      {isLong && !expanded ? (
         <>
-          {' '}
-          <Link
-            component="button"
-            type="button"
-            variant="body2"
-            onClick={() => setExpanded(false)}
-          >
-            Show less
+          {linkify(`${text.slice(0, TASK_TRUNCATE_LENGTH).trimEnd()}…`)}{' '}
+          <Link component="button" type="button" variant="body2" onClick={() => setExpanded(true)}>
+            View all
           </Link>
         </>
+      ) : (
+        <>
+          {linkify(text)}
+          {isLong && (
+            <>
+              {' '}
+              <Link
+                component="button"
+                type="button"
+                variant="body2"
+                onClick={() => setExpanded(false)}
+              >
+                Show less
+              </Link>
+            </>
+          )}
+        </>
       )}
-    </>
+    </Box>
   );
 }
 
